@@ -2,6 +2,7 @@ package ngram
 
 import (
 	"errors"
+	"fmt"
 	"sync"
 
 	"github.com/spaolacci/murmur3"
@@ -199,6 +200,7 @@ func (ngram *NGramIndex) match(input string, tval float64) ([]SearchResult, erro
 		allngrams := float64(len(inputNgrams))
 		matchngrams := float64(count)
 		sim = matchngrams / allngrams
+		fmt.Println(matchngrams, allngrams, tokenCount)
 		// if ngram.warp == 1.0 {
 		// 	sim = matchngrams / allngrams
 		// } else {
