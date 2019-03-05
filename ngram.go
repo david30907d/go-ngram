@@ -2,7 +2,6 @@ package ngram
 
 import (
 	"errors"
-	"math"
 	"sync"
 
 	"github.com/spaolacci/murmur3"
@@ -199,13 +198,15 @@ func (ngram *NGramIndex) match(input string, tval float64) ([]SearchResult, erro
 		var sim float64
 		allngrams := float64(len(inputNgrams))
 		matchngrams := float64(count)
-		if ngram.warp == 1.0 {
-			sim = matchngrams / allngrams
-		} else {
-			diffngrams := allngrams - matchngrams
-			sim = math.Pow(allngrams, ngram.warp) - math.Pow(diffngrams, ngram.warp)
-			sim /= math.Pow(allngrams, ngram.warp)
-		}
+		sim = matchngrams / allngrams
+		// if ngram.warp == 1.0 {
+		// 	sim = matchngrams / allngrams
+		// } else {
+		// 	diffngrams := allngrams - matchngrams
+		// 	sim = math.Pow(allngrams, ngram.warp) - math.Pow(diffngrams, ngram.warp)
+		// 	sim /= math.Pow(allngrams, ngram.warp)
+		// }
+
 		if sim >= tval {
 			res := SearchResult{Similarity: sim, TokenID: token}
 			output = append(output, res)
